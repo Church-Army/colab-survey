@@ -1,0 +1,45 @@
+---
+title: "Prize Draw: Developing our practise"
+author: "Dave"
+format: html
+editor: visual
+---
+
+## Libraries
+
+```{r libraries}
+library(conflicted)
+
+library(here)
+library(fs)
+
+library(dplyr)
+conflicted::conflicts_prefer(dplyr::filter)
+library(vroom)
+```
+
+## Read data
+
+```{r read_data}
+emails <-
+  vroom(here("response-data", "responses_developing-our-practise_prize-draw.csv"),
+        col_select = c(email = `Email address`),
+        show_col_types = FALSE) |> 
+  filter(!is.na(email))
+
+head(emails)
+```
+
+## Pick a winner
+
+```{r pick_winner}
+
+# set_seed
+set.seed(20231009)
+
+emails <- pull(emails, email)
+
+## Get random email
+
+sample(emails, size = 1)
+```
